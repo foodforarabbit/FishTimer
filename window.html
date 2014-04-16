@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/timer.css">
+  </head>
+  <body>
+    <div>Fish Timer</div>
+    <form id="addTime">
+      Add time: <input id="time" type="text" name="time" placeholder="time in minutes">
+      <input id="add" type="submit" value="Add">
+    </form>
+    <div>
+      <button id="startTimer" class="btn btn-success">START</a>
+      <button id="skipCurrent" class="btn btn-warning hide">SKIP</a>
+      <button id="resetTimer" class="btn btn-warning">RESET</a>
+    </div>
+    <div>
+      <h1 id="totalTime">0:00</h1>
+    </div>
+    <div id="splitTimeContainer">
+      <ul class="unstyled">
+      </ul>
+    </div>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/timer.js"></script>
+  </body>
+</html>

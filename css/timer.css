@@ -1,0 +1,10 @@
+li.splitTime {
+  border:1px solid grey;
+  background: lightgrey;
+}
+li.splitTime.done {
+  background: rgba(150, 50, 50, 1);
+}
+li.splitTime.current {
+  background: rgba(50, 150, 50, 1);
+}

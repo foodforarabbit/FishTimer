@@ -1,0 +1,11 @@
+{
+  "name": "Presentation Timer",
+  "description": "For fish",
+  "version": "0.1",
+  "app": {
+    "background": {
+      "scripts": ["js/jquery.js", "js/bootstrap.js", "js/background.js", "js/timer.js"]
+    }
+  },
+  "icons": { "16": "icon16x16.png", "128": "icon128x128.png" }
+}
