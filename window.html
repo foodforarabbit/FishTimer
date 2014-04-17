@@ -7,7 +7,7 @@
   <body>
     <div>Fish Timer</div>
     <form id="addTime">
-      Add time: <input id="time" type="text" name="time" placeholder="time in minutes">
+      Add time: <input id="time" type="text" name="time" placeholder="time in minutes"><input id="name" type="text" name="name" placeholder="name(optional)">
       <input id="add" type="submit" value="Add">
     </form>
     <div>
@@ -15,14 +15,15 @@
       <button id="skipCurrent" class="btn btn-warning hide">SKIP</a>
       <button id="resetTimer" class="btn btn-warning">RESET</a>
     </div>
-    <div>
-      <h1 id="totalTime">0:00</h1>
+    <div class="timerElements" >
+      <div id="totalTime"><span>00:00.0</span></div>
     </div>
-    <div id="splitTimeContainer">
+    <div class="timerElements" id="splitTimeContainer">
       <ul class="unstyled">
       </ul>
     </div>
     <script src="js/jquery.js"></script>
+    <script src="js/jquery.textfill.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/timer.js"></script>
   </body>

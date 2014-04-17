@@ -1,3 +1,8 @@
+// options
+var speed = 100;
+
+
+
 var totalTime = 0;
 var crst = 0;
 var timer;
@@ -5,9 +10,9 @@ var running = false;
 var currentRunningSplitTime;
 var startTimerButton, addTimeForm, addTimeTextField, addTimeAddButton, totalTimeLabel, splitTimeContainer, splitTimeList;
 $(document).ready(function(){
-  console.log('hi');
   addTimeForm = $('form#addTime');
   addTimeTextField = addTimeForm.find('input#time');
+  addNameTextField = addTimeForm.find('input#name');
   addTimeAddButton = addTimeForm.find('input#add');
   totalTimeLabel = $('#totalTime');
   splitTimeContainer = $('div#splitTimeContainer');
@@ -16,20 +21,35 @@ $(document).ready(function(){
   skipButton = $('#skipCurrent');
   resetButton = $('#resetTimer');
 
+  $(window).on('resize', function(){
+    totalTimeLabel.textfill();
+    $('.resizeText').textfill();
+    $(window).height() * 1.2 < $(window).width() ? $('.timerElements').addClass('wide') : $('.timerElements').removeClass('wide')
+  }).trigger('resize');
+
 
   addTimeAddButton.on('click', function(){
-    var parsedTimeMinutes = parseInt(addTimeTextField.val() || 0);
+    var parsedTimeMinutes = parseFloat(addTimeTextField.val() || 0);
+    var name = addNameTextField.val() || "";
     console.log(parsedTimeMinutes);
     var ParsedTimeMSec = parsedTimeMinutes * 60 * 100
     totalTime += ParsedTimeMSec;
     var hours = Math.floor(ParsedTimeMSec / 60);
     var minutes = ParsedTimeMSec % 60;
     var li = $('<li/>').addClass('splitTime').attr('data-init-time', ParsedTimeMSec).attr('data-time', ParsedTimeMSec).appendTo(splitTimeList);
-    var span = $('<span/>').addClass('splitTimeLabel').text(timeFromMSec(ParsedTimeMSec)).appendTo(li);
+    var spanTimeContainer = $('<div/>').addClass('resizeText').appendTo(li);
+    var spanTime = $('<span/>').addClass('splitTimeLabel').text(timeFromMSec(ParsedTimeMSec)).appendTo(spanTimeContainer);
+    var spanNameContainer = $('<div/>').addClass('').addClass('upthere').appendTo(li);
+    var spanName = $('<span/>').addClass('splitTimeName').text(name).appendTo(spanNameContainer);
     var aaa = $('<button/>').attr("type", "button").addClass('close').appendTo(li).html("&times;");
+
+    
 
     setTotalTime();
     addTimeTextField.val("");
+    addNameTextField.val("");
+
+    $(window).trigger('resize');
     return false;
   })
 
@@ -84,7 +104,7 @@ function startTimer(){
   startTimerButton.addClass('btn-danger');
   startTimerButton.text('STOP');
   running = true;
-  timer = setInterval(runTimer, 1);
+  timer = setInterval(runTimer, speed);
 }
 
 function stopTimer(){
@@ -93,6 +113,15 @@ function stopTimer(){
   startTimerButton.text('START');
   running = false;
   window.clearInterval(timer);
+}
+
+function flashRed(){
+  totalTimeLabel.css('background-color', 'red');
+  totalTimeLabel.css('color', 'white');
+  setTimeout(function(){
+    totalTimeLabel.css('background-color', 'transparent');
+    totalTimeLabel.css('color', 'black');
+  }, 100)
 }
 
 function clearCurrentSplitTime(){
@@ -109,7 +138,7 @@ function runTimer(){
     stopTimer();
     clearCurrentSplitTime();
   } else {
-    totalTime -= 1;
+    totalTime -= speed/10;
     setTotalTime();
     // crst == 0 && 
     while(crst == 0 && (splitTimeListItems = splitTimeList.children("li:not(.done)")).length > 0){
@@ -117,12 +146,13 @@ function runTimer(){
         currentRunningSplitTime = splitTimeListItems.first();
         currentRunningSplitTime.addClass('current')
         crst = parseInt(currentRunningSplitTime.attr('data-time'));
+        flashRed();
       } else {
         clearCurrentSplitTime();
       }
     }
     if(crst > 0){
-      crst -= 1;
+      crst -= speed/10;
       currentRunningSplitTime.attr('data-time', crst);
       try{
         currentRunningSplitTime.find('.splitTimeLabel').text(timeFromMSec(crst));
@@ -140,8 +170,8 @@ function timeFromMSec(time){
   var hh = Math.floor(time / 360000);
   var mm = Math.floor((time % 360000) / 6000);
   var ss = Math.floor((time % 6000) / 100);
-  var ms = time % 100;
-  return pad(hh, 2) + ":" + pad(mm, 2) + ":" + pad(ss, 2) + "." + pad(ms, 3);
+  var ms = time % 100 / 10;
+  return pad(mm, 2) + ":" + pad(ss, 2) + "." + pad(ms, 1);
 }
 
 function pad (str, max) {
@@ -150,5 +180,5 @@ function pad (str, max) {
 }
 
 function setTotalTime(){
-  totalTimeLabel.text(timeFromMSec(totalTime));
+  totalTimeLabel.find('span').text(timeFromMSec(totalTime));
 }

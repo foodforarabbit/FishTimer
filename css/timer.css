@@ -1,10 +1,54 @@
+#totalTime{
+  line-height: initial;
+  font-size: 10em;
+}
 li.splitTime {
+  position:relative;
+  line-height: initial;
   border:1px solid grey;
   background: lightgrey;
+  font-size: 4em;
+  padding: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 li.splitTime.done {
   background: rgba(150, 50, 50, 1);
 }
 li.splitTime.current {
   background: rgba(50, 150, 50, 1);
+}
+.splitTimeName {
+  margin: 0 24px;
+  color: grey;
+}
+
+li.splitTime.current {
+  color: white;
+}
+
+li.splitTime.current .splitTimeName {
+  color: lightgrey;
+}
+.close {
+  position:absolute;
+  top: 0;
+  right: 4px;
+  opacity: 0.5;
+}
+.resizeText {
+  max-width: 50%;
+}
+.upthere {
+  position:absolute;
+  top: 0;
+  right: 0;
+  max-width: 50%;
+}
+.timerElements{
+  vertical-align: top;
+}
+.timerElements.wide{
+  display:inline-block;
+  width: 49%;
 }
